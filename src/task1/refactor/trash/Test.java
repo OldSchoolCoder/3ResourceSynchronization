@@ -5,7 +5,6 @@ import java.io.IOException;
 
 public class Test {
     public static void main(String[] args) throws IOException {
-        //File file = new File("WriteFile.java");
         File file = new File("/Users/dima/Documents/Java projects/job4j/Middle/Блок 1 Multithreading /3. Синхронизация ресурсов/pom.xml");
         System.out.println(file.exists());
         ParseFile parseFile = new ParseFile();

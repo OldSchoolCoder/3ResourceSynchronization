@@ -3,6 +3,7 @@ package task1.refactor.trash;
 import java.io.*;
 
 public class ParseFile {
+
     private File file;
 
     public synchronized void setFile(File f) {
