@@ -25,7 +25,6 @@ public class CountTest {
         }
     }
 
-    //@DynamicTest
     @Test
     public void whenExecute2ThreadThen2() throws InterruptedException {
         //Создаем счетчик.
