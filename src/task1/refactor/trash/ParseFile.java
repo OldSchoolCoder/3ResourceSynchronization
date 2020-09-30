@@ -5,6 +5,7 @@ import java.io.*;
 public class ParseFile {
 
     private File file;
+    /*
 
     public synchronized void setFile(File f) {
         file = f;
@@ -12,6 +13,10 @@ public class ParseFile {
 
     public synchronized File getFile() {
         return file;
+    }*/
+
+    public ParseFile(File file) {
+        this.file = file;
     }
 
     public synchronized StringBuffer getContent() throws IOException {
@@ -21,7 +26,7 @@ public class ParseFile {
         InputStream inputStream = new FileInputStream(file);
         int data;
         while ((data = readFile.readByte(inputStream)) != -1) {
-            output=writeFile.writeByte(data);
+            output=writeFile.writeByte(data, output);
         }
         inputStream.close();
         return output;
@@ -35,7 +40,7 @@ public class ParseFile {
         int data;
         while ((data = readFile.readByte(inputStream)) != -1) {
             if (data < 0x80) {
-                output=writeFile.writeByte(data);
+                output=writeFile.writeByte(data, output);
             }
         }
         return output;
