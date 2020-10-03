@@ -3,43 +3,44 @@ package task1.refactor.maybe;
 import java.io.*;
 
 public class ParseFile {
-    private File file;
 
-    public synchronized void setFile(File f) {
-        file = f;
+    private final File file;
+
+    public ParseFile(final File file) {
+        this.file = file;
     }
 
-    public synchronized File getFile() {
-        return file;
-    }
-
-    public synchronized StringBuffer getContent() throws IOException {
+    public StringBuffer getContent() throws IOException {
         ReadFile readFile = new ReadFile();
         WriteFile writeFile = new WriteFile();
         StringBuffer output = new StringBuffer();
+        InputStream inputStream = new FileInputStream(file);
         int data;
-        while ((data = readFile.readByte()) != -1) {
-            output = writeFile.writeByte(data);
+        while ((data = readFile.readByte(inputStream)) != -1) {
+            output = writeFile.writeByte(data, output);
         }
+        inputStream.close();
         return output;
     }
 
-    public synchronized StringBuffer getContentWithoutUnicode() throws IOException {
+    public StringBuffer getContentWithoutUnicode() throws IOException {
         ReadFile readFile = new ReadFile();
         WriteFile writeFile = new WriteFile();
         StringBuffer output = new StringBuffer();
+        InputStream inputStream = new FileInputStream(file);
         int data;
-        while ((data = readFile.readByte()) != -1) {
+        while ((data = readFile.readByte(inputStream)) != -1) {
             if (data < 0x80) {
-                output = writeFile.writeByte(data);
+                output = writeFile.writeByte(data, output);
             }
         }
+        inputStream.close();
         return output;
     }
 
     public synchronized void saveContent(String content) throws IOException {
-        OutputStream o = new FileOutputStream(file);
-        o.write(content.getBytes());
-        o.close();
+        FileOutputStream fileOutputStream = new FileOutputStream(file);
+        fileOutputStream.write(content.getBytes());
+        fileOutputStream.close();
     }
 }
