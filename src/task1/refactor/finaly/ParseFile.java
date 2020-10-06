@@ -17,11 +17,7 @@ public class ParseFile {
         InputStream inputStream = new FileInputStream(file);
         int data;
         while ((data = readFile.readByte(inputStream)) != -1) {
-            if (filter.test("WithoutUnicode")) {
-                if (data < 0x80) {
-                    output = writeFile.writeByte(data, output);
-                }
-            } else {
+            if (filter.test(data)) {
                 output = writeFile.writeByte(data, output);
             }
         }
