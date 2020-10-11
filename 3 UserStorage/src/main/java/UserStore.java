@@ -10,11 +10,13 @@ public class UserStore {
     private final AtomicInteger id = new AtomicInteger();
 
     public synchronized void transfer(int fromId, int toId, int amount) {
-        int oldAmount;
-        oldAmount = users.get(fromId).getAmount();
-        users.get(fromId).setAmount(oldAmount - amount);
-        oldAmount = users.get(toId).getAmount();
-        users.get(toId).setAmount(oldAmount + amount);
+        if (users.containsKey(fromId) && users.containsKey(toId)) {
+            int oldAmount;
+            oldAmount = users.get(fromId).getAmount();
+            users.get(fromId).setAmount(oldAmount - amount);
+            oldAmount = users.get(toId).getAmount();
+            users.get(toId).setAmount(oldAmount + amount);
+        }
     }
 
     public synchronized boolean add(User user) {
