@@ -6,7 +6,7 @@ import java.util.Iterator;
 @ThreadSafe
 public class SingleLockList<T> implements Iterable<T> {
     @GuardedBy("this")
-    private DynamicList<T> list = new DynamicList<T>();
+    private final DynamicList<T> list = new DynamicList<T>();
 
     public synchronized void add(T value) {
         list.add(value);
